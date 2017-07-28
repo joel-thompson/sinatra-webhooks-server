@@ -2,7 +2,7 @@ require 'sinatra'
 require 'json'
 
 #You may not need to bind the server to 0.0.0.0
-#It automatically binds to 127.0.0.0 
+#It automatically binds to 127.0.0.0
 # set :bind, '0.0.0.0'
 
 global_payload = ""
@@ -13,6 +13,12 @@ post '/webhook' do
   puts "Webhook JSON Data: #{push.inspect}"
   unsigned_payload_body = push.inspect
   global_payload = unsigned_payload_body
+end
+
+post '/webhook/returns500' do
+  push = JSON.parse(request.body.read)
+  puts "Webhook JSON Data: #{push.inspect}"
+  return halt 409
 end
 
 # simply prints out the global_payload
